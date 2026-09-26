@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Controle de Frota</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <header class="topo">
+        <div class="container">
+            <h1>Controle de Frota</h1>
+            <nav class="abas" role="tablist">
+                <button class="aba ativa" data-aba="painel" role="tab">Painel</button>
+                <button class="aba" data-aba="veiculos" role="tab">Veículos</button>
+                <button class="aba" data-aba="motoristas" role="tab">Motoristas</button>
+                <button class="aba" data-aba="abastecimentos" role="tab">Abastecimentos</button>
+                <button class="aba" data-aba="manutencoes" role="tab">Manutenções</button>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <div id="mensagem" class="mensagem" role="status" hidden></div>
+
+        <!-- PAINEL -->
+        <section id="painel" class="painel-aba">
+            <div class="cards-resumo">
+                <div class="card-resumo"><span id="resumoVeiculos">0</span><small>veículos ativos</small></div>
+                <div class="card-resumo vencida"><span id="resumoVencidas">0</span><small>revisões vencidas</small></div>
+                <div class="card-resumo proxima"><span id="resumoProximas">0</span><small>revisões próximas</small></div>
+                <div class="card-resumo"><span id="resumoCnh">0</span><small>CNHs vencidas</small></div>
+            </div>
+
+            <div class="bloco">
+                <div class="bloco-titulo">
+                    <h2>Alertas de revisão</h2>
+                    <label class="check"><input type="checkbox" id="alertasTodos"> mostrar veículos em dia</label>
+                </div>
+                <ul id="listaAlertas" class="lista-alertas"></ul>
+            </div>
+        </section>
+
+        <!-- VEICULOS -->
+        <section id="veiculos" class="painel-aba" hidden>
+            <div class="bloco">
+                <h2 id="tituloFormVeiculo">Cadastrar veículo</h2>
+                <form id="formVeiculo" class="grade">
+                    <input type="hidden" id="veiculoId">
+                    <label>Placa <input id="veiculoPlaca" required maxlength="8" placeholder="ABC1D23"></label>
+                    <label>Marca <input id="veiculoMarca" required maxlength="60"></label>
+                    <label>Modelo <input id="veiculoModelo" required maxlength="80"></label>
+                    <label>Ano <input id="veiculoAno" type="number" required min="1950"></label>
+                    <label>Km atual <input id="veiculoKm" type="number" required min="0"></label>
+                    <label>Revisão a cada (km) <input id="veiculoIntervalo" type="number" min="1000" max="100000" value="10000"></label>
+                    <label>Km da última revisão <input id="veiculoKmRevisao" type="number" min="0" value="0"></label>
+                    <div class="acoes">
+                        <button type="submit">Salvar</button>
+                        <button type="button" class="secundario" id="cancelarVeiculo" hidden>Cancelar edição</button>
+                    </div>
+                </form>
+            </div>
+            <div class="bloco">
+                <h2>Veículos</h2>
+                <div class="tabela-rolagem">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Placa</th><th>Veículo</th><th class="num">Km atual</th>
+                                <th class="num">Próx. revisão</th><th>Situação</th><th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaVeiculos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MOTORISTAS -->
+        <section id="motoristas" class="painel-aba" hidden>
+            <div class="bloco">
+                <h2 id="tituloFormMotorista">Cadastrar motorista</h2>
+                <form id="formMotorista" class="grade">
+                    <input type="hidden" id="motoristaId">
+                    <label class="largo">Nome <input id="motoristaNome" required maxlength="120"></label>
+                    <label>CNH (11 dígitos) <input id="motoristaCnh" required inputmode="numeric" maxlength="14"></label>
+                    <label>Categoria
+                        <select id="motoristaCategoria" required>
+                            <option>B</option><option>A</option><option>AB</option><option>C</option>
+                            <option>D</option><option>E</option><option>AC</option><option>AD</option><option>AE</option>
+                        </select>
+                    </label>
+                    <label>Validade da CNH <input id="motoristaValidade" type="date" required></label>
+                    <label>Telefone <input id="motoristaTelefone" maxlength="20"></label>
+                    <div class="acoes">
+                        <button type="submit">Salvar</button>
+                        <button type="button" class="secundario" id="cancelarMotorista" hidden>Cancelar edição</button>
+                    </div>
+                </form>
+            </div>
+            <div class="bloco">
+                <h2>Motoristas</h2>
+                <div class="tabela-rolagem">
+                    <table>
+                        <thead>
+                            <tr><th>Nome</th><th>CNH</th><th>Cat.</th><th>Validade</th><th>Telefone</th><th></th></tr>
+                        </thead>
+                        <tbody id="tabelaMotoristas"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- ABASTECIMENTOS -->
+        <section id="abastecimentos" class="painel-aba" hidden>
+            <div class="bloco">
+                <h2>Registrar abastecimento</h2>
+                <form id="formAbastecimento" class="grade">
+                    <label>Veículo <select id="abastVeiculo" class="selectVeiculo" required></select></label>
+                    <label>Motorista <select id="abastMotorista" required></select></label>
+                    <label>Data <input id="abastData" type="date" required></label>
+                    <label>Km no hodômetro <input id="abastKm" type="number" min="0" required></label>
+                    <label>Litros <input id="abastLitros" type="number" step="0.001" min="0.001" required></label>
+                    <label>Valor total (R$) <input id="abastValor" type="number" step="0.01" min="0.01" required></label>
+                    <label>Combustível
+                        <select id="abastCombustivel">
+                            <option value="GASOLINA">Gasolina</option><option value="ETANOL">Etanol</option>
+                            <option value="DIESEL">Diesel</option><option value="GNV">GNV</option>
+                        </select>
+                    </label>
+                    <div class="acoes"><button type="submit">Registrar</button></div>
+                </form>
+            </div>
+            <div class="bloco">
+                <div class="bloco-titulo">
+                    <h2>Histórico</h2>
+                    <label>Filtrar <select id="filtroAbastVeiculo" class="selectVeiculo" data-todos="1"></select></label>
+                </div>
+                <div class="tabela-rolagem">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th><th>Placa</th><th>Motorista</th><th class="num">Km</th><th class="num">Litros</th>
+                                <th class="num">Total</th><th class="num">R$/L</th><th class="num">km/L</th><th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaAbastecimentos"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- MANUTENCOES -->
+        <section id="manutencoes" class="painel-aba" hidden>
+            <div class="bloco">
+                <h2>Registrar manutenção</h2>
+                <form id="formManutencao" class="grade">
+                    <label>Veículo <select id="manutVeiculo" class="selectVeiculo" required></select></label>
+                    <label>Tipo
+                        <select id="manutTipo">
+                            <option value="REVISAO">Revisão (reinicia o alerta)</option>
+                            <option value="PREVENTIVA">Preventiva</option>
+                            <option value="CORRETIVA">Corretiva</option>
+                        </select>
+                    </label>
+                    <label>Data <input id="manutData" type="date" required></label>
+                    <label>Km no hodômetro <input id="manutKm" type="number" min="0" required></label>
+                    <label>Custo (R$) <input id="manutCusto" type="number" step="0.01" min="0" required></label>
+                    <label>Oficina <input id="manutOficina" maxlength="120"></label>
+                    <label class="largo">Descrição <input id="manutDescricao" required maxlength="500"></label>
+                    <div class="acoes"><button type="submit">Registrar</button></div>
+                </form>
+            </div>
+            <div class="bloco">
+                <div class="bloco-titulo">
+                    <h2>Histórico</h2>
+                    <label>Filtrar <select id="filtroManutVeiculo" class="selectVeiculo" data-todos="1"></select></label>
+                </div>
+                <div class="tabela-rolagem">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Data</th><th>Placa</th><th>Tipo</th><th>Descrição</th><th class="num">Km</th>
+                                <th class="num">Custo</th><th>Oficina</th><th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="tabelaManutencoes"></tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <footer class="rodape">API documentada em <a href="swagger-ui.html">/swagger-ui.html</a></footer>
+    </main>
+
+    <script type="module" src="js/app.js"></script>
+</body>
+
+</html>

@@ -1,0 +1,16 @@
+package aulas.umc.frota.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+import java.time.Clock;
+
+/** "Hoje" vem de um Clock injetado para que os testes possam fixar a data. */
+@Configuration
+public class RelogioConfig {
+
+    @Bean
+    public Clock clock() {
+        return Clock.systemDefaultZone();
+    }
+}

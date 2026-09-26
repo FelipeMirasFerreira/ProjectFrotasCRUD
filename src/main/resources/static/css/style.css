@@ -1,0 +1,337 @@
+:root {
+    --fundo: #f4f6f8;
+    --superficie: #ffffff;
+    --borda: #d8dee6;
+    --texto: #1f2933;
+    --texto-suave: #5f6b7a;
+    --primaria: #1d5fbf;
+    --primaria-hover: #174d9c;
+    --vencida: #b42318;
+    --vencida-fundo: #fdecea;
+    --proxima: #9a5b00;
+    --proxima-fundo: #fff4e0;
+    --em-dia: #1e7a3c;
+    --em-dia-fundo: #e7f6ec;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background: var(--fundo);
+    color: var(--texto);
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, Arial, sans-serif;
+    font-size: 15px;
+}
+
+.container {
+    width: min(1100px, calc(100% - 32px));
+    margin: 0 auto;
+}
+
+/* Topo e abas */
+.topo {
+    background: var(--superficie);
+    border-bottom: 1px solid var(--borda);
+    margin-bottom: 20px;
+}
+
+.topo h1 {
+    font-size: 1.35rem;
+    margin: 0;
+    padding: 16px 0 8px;
+}
+
+.abas {
+    display: flex;
+    gap: 4px;
+    overflow-x: auto;
+}
+
+.aba {
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: var(--texto-suave);
+    cursor: pointer;
+    font: inherit;
+    padding: 10px 12px;
+    white-space: nowrap;
+}
+
+.aba:hover {
+    background: none;
+    color: var(--texto);
+}
+
+.aba.ativa {
+    border-bottom-color: var(--primaria);
+    color: var(--primaria);
+    font-weight: 600;
+}
+
+/* Blocos */
+.bloco {
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    margin-bottom: 16px;
+    padding: 16px;
+}
+
+.bloco h2 {
+    font-size: 1.05rem;
+    margin: 0 0 12px;
+}
+
+.bloco-titulo {
+    align-items: center;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    justify-content: space-between;
+    margin-bottom: 12px;
+}
+
+.bloco-titulo h2 {
+    margin: 0;
+}
+
+.bloco-titulo label {
+    align-items: center;
+    display: flex;
+    gap: 8px;
+}
+
+/* Formularios */
+.grade {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
+}
+
+.grade label {
+    color: var(--texto-suave);
+    display: grid;
+    font-size: 0.85rem;
+    gap: 4px;
+}
+
+.grade .largo {
+    grid-column: 1 / -1;
+}
+
+input,
+select {
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 6px;
+    color: var(--texto);
+    font: inherit;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+input:focus,
+select:focus {
+    border-color: var(--primaria);
+    outline: 2px solid color-mix(in srgb, var(--primaria) 25%, transparent);
+}
+
+.check {
+    color: var(--texto-suave);
+    font-size: 0.9rem;
+}
+
+.check input {
+    width: auto;
+}
+
+.acoes {
+    align-items: end;
+    display: flex;
+    gap: 8px;
+    grid-column: 1 / -1;
+}
+
+button {
+    background: var(--primaria);
+    border: none;
+    border-radius: 6px;
+    color: #fff;
+    cursor: pointer;
+    font: inherit;
+    font-weight: 600;
+    padding: 9px 16px;
+}
+
+button:hover {
+    background: var(--primaria-hover);
+}
+
+button.secundario {
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    color: var(--texto);
+}
+
+button.link {
+    background: none;
+    color: var(--primaria);
+    font-weight: normal;
+    padding: 4px 6px;
+}
+
+button.link:hover,
+button.secundario:hover {
+    background: var(--fundo);
+}
+
+button.link.perigo {
+    color: var(--vencida);
+}
+
+/* Tabelas */
+.tabela-rolagem {
+    overflow-x: auto;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+th,
+td {
+    border-bottom: 1px solid var(--borda);
+    padding: 8px;
+    text-align: left;
+    vertical-align: middle;
+    white-space: nowrap;
+}
+
+th {
+    color: var(--texto-suave);
+    font-size: 0.8rem;
+    font-weight: 600;
+    text-transform: uppercase;
+}
+
+td.num,
+th.num {
+    font-variant-numeric: tabular-nums;
+    text-align: right;
+}
+
+td.quebra {
+    white-space: normal;
+    min-width: 200px;
+}
+
+td.botoes {
+    text-align: right;
+}
+
+.vazio {
+    color: var(--texto-suave);
+    padding: 16px 8px;
+    text-align: center;
+}
+
+/* Etiquetas de situacao */
+.etiqueta {
+    border-radius: 999px;
+    display: inline-block;
+    font-size: 0.78rem;
+    font-weight: 600;
+    padding: 2px 10px;
+}
+
+.etiqueta.VENCIDA { background: var(--vencida-fundo); color: var(--vencida); }
+.etiqueta.PROXIMA { background: var(--proxima-fundo); color: var(--proxima); }
+.etiqueta.EM_DIA  { background: var(--em-dia-fundo); color: var(--em-dia); }
+
+/* Painel */
+.cards-resumo {
+    display: grid;
+    gap: 12px;
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    margin-bottom: 16px;
+}
+
+.card-resumo {
+    background: var(--superficie);
+    border: 1px solid var(--borda);
+    border-radius: 8px;
+    display: grid;
+    padding: 14px 16px;
+}
+
+.card-resumo span {
+    font-size: 1.8rem;
+    font-weight: 700;
+    font-variant-numeric: tabular-nums;
+}
+
+.card-resumo small {
+    color: var(--texto-suave);
+}
+
+.card-resumo.vencida span { color: var(--vencida); }
+.card-resumo.proxima span { color: var(--proxima); }
+
+.lista-alertas {
+    display: grid;
+    gap: 8px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.alerta {
+    align-items: center;
+    border: 1px solid var(--borda);
+    border-left-width: 5px;
+    border-radius: 6px;
+    display: grid;
+    gap: 4px 16px;
+    grid-template-columns: 1fr auto;
+    padding: 10px 14px;
+}
+
+.alerta.VENCIDA { border-left-color: var(--vencida); }
+.alerta.PROXIMA { border-left-color: var(--proxima); }
+.alerta.EM_DIA  { border-left-color: var(--em-dia); }
+
+.alerta strong {
+    font-size: 1rem;
+}
+
+.alerta p {
+    color: var(--texto-suave);
+    grid-column: 1 / -1;
+    margin: 0;
+}
+
+/* Mensagens */
+.mensagem {
+    border-radius: 6px;
+    margin-bottom: 16px;
+    padding: 10px 14px;
+}
+
+.mensagem.sucesso { background: var(--em-dia-fundo); color: var(--em-dia); }
+.mensagem.erro    { background: var(--vencida-fundo); color: var(--vencida); }
+
+.rodape {
+    color: var(--texto-suave);
+    font-size: 0.85rem;
+    padding: 8px 0 32px;
+    text-align: center;
+}
+
+.rodape a {
+    color: var(--primaria);
+}
