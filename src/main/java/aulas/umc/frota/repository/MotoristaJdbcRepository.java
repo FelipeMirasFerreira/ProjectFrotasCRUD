@@ -96,7 +96,7 @@ public class MotoristaJdbcRepository extends JdbcRepository {
                 return rs.next();
             }
         } catch (SQLException e) {
-            throw new RepositoryException("Erro verificando CNH", e);
+            throw new RepositoryException("Erro de verificação de CNH", e);
         }
     }
 
